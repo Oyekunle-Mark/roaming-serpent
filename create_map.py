@@ -204,10 +204,6 @@ while q.size() > 0:
     # get the response
     data = response.json()
 
-    # sleep the thread for the cooldown period
-    cooldown = data["cooldown"]
-    sleep(cooldown)
-
     # set the player's destination room
     # add it to the room_datails
     room_details.append(data)
@@ -241,12 +237,16 @@ while q.size() > 0:
     with open("room_details.py", "w") as f:
         f.write(json.dumps(room_details))
 
+    # sleep the thread for the cooldown period
+    cooldown = data["cooldown"]
+    sleep(cooldown)
+
     # call get_unexplored_room to add the next direction to the queue
     get_unexplored_room(q)
 
 
-print("\n******** Room map:", room_map)
-print("\n******** Traversal path:", traversalPath)
+# print("\n******** Room map:", room_map)
+# print("\n******** Traversal path:", traversalPath)
 
 
 # # TRAVERSAL TEST

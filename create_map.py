@@ -89,8 +89,10 @@ def get_unexplored_room(queue):
         player {class} -- instance of the Player class
         queue {class} -- instance of the Queue class
     """
+    current_room_id = str(room_details[-1]["room_id"])
+
     # get direction available in the player's current room
-    current_room = room_map[f"{current_room_id}"]
+    current_room = room_map[current_room_id]
     # will hold the unexplored_paths
     unexplored_paths = []
 
@@ -132,6 +134,8 @@ def bft_find_other_room():
     Returns:
         list -- path to the room with an unexplored direction
     """
+    current_room_id = str(room_details[-1]["room_id"])
+
     # create new room queue
     q = Queue()
     # hold the visited room
@@ -176,14 +180,23 @@ get_unexplored_room(q)
 
 # while there is still an unexplored room
 while q.size() > 0:
+    with open("room_graph.py", "r") as f:
+        # read the map from the room_graph world
+        room_map = json.loads(f.read())
+
+    with open("room_details.py", "r") as f:
+        # read the room details
+        room_details = json.loads(f.read())
+
     # current player position
-    current_player_room = room_details[-1]["room_id"]
+    current_player_room = str(room_details[-1]["room_id"])
 
     # the next direction
     next_direction = q.dequeue()
 
     # move the player in that direction
-    response = requests.post("https://lambda-treasure-hunt.herokuapp.com/api/adv/move/", json={"direction": next_direction}, headers={'Authorization': 'Token b84b4bca57fd4281c66e58d085e812be51cb389b'})
+    response = requests.post("https://lambda-treasure-hunt.herokuapp.com/api/adv/move/", json={
+                             "direction": next_direction}, headers={'Authorization': 'Token b84b4bca57fd4281c66e58d085e812be51cb389b'})
 
     # add it to the traversal path
     traversalPath.append(next_direction)
@@ -194,18 +207,16 @@ while q.size() > 0:
     # sleep the thread for the cooldown period
     cooldown = data["cooldown"]
     sleep(cooldown)
-    
 
     # set the player's destination room
     # add it to the room_datails
     room_details.append(data)
 
     # new player position
-    destination_room = room_details[-1]["room_id"]
-
+    destination_room = str(room_details[-1]["room_id"])
 
     # update the map with the new discovery
-    room_map[f"{current_player_room}"][f"{next_direction}"] = destination_room
+    room_map[current_player_room][next_direction] = destination_room
 
     # if the current room has not been added to the map
     if destination_room not in room_map:
@@ -217,7 +228,6 @@ while q.size() > 0:
 
         # add it and set to empty dictionary
         room_map[destination_room] = directions
-        
 
     # get reverse direction to set it in the previous room
     r_direction = reverse_directions[next_direction]

@@ -1,1 +1,12 @@
-[{"room_id": 0, "title": "A Dark Room", "description": "You cannot see anything.", "coordinates": "(60,60)", "exits": ["n", "s", "e", "w"], "cooldown": 1.0, "errors": [], "messages": []}, {"room_id": 10, "title": "A Dark Room", "description": "You cannot see anything.", "coordinates": "(60,61)", "exits": ["n", "s", "w"], "cooldown": 100.0, "errors": [], "messages": ["You have walked north."]}]
+[
+    {
+        "room_id": 0,
+        "title": "A Dark Room",
+        "description": "You cannot see anything.",
+        "coordinates": "(60,60)",
+        "exits": ["n", "s", "e", "w"],
+        "cooldown": 1.0,
+        "errors": [],
+        "messages": []
+    }
+]

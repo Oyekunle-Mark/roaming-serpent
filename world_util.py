@@ -1,5 +1,5 @@
-import random
-import math
+# import random
+# import math
 
 class Room:
     def __init__(self, name, description, id=0, x=None, y=None):

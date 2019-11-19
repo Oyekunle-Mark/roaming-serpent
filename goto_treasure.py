@@ -206,19 +206,24 @@ def goto_treasure(current_room_id, destination_room_id_or_title, can_fly=False, 
 
 
 def get_current_room():
+    # make request to the init endpoint
     response = requests.get("https://lambda-treasure-hunt.herokuapp.com/api/adv/init/",
                             headers={'Authorization': f"Token {TOKEN}"}).json()
 
+    # get room id
     room_id = response["room_id"]
+    # get cooldown and sleep for the cooldown period
     cooldown = response["cooldown"]
     sleep(cooldown)
 
+    # return the room_id in string format
     return str(room_id)
 
 
 if __name__ == "__main__":
     TOKEN = config("TOKEN")
 
+    # keep hunting until the user stops the script
     while True:
         # get the player's current room
         current_room = get_current_room()
@@ -239,18 +244,23 @@ if __name__ == "__main__":
         response = requests.post("https://lambda-treasure-hunt.herokuapp.com/api/adv/sell/", json={
             "name": "treasure"}, headers={'Authorization': f"Token {TOKEN}"}).json()
 
+        # get cooldown and sleep for the cooldown period
         cooldown = response["cooldown"]
         sleep(cooldown)
 
+        # sell the treasure
         response = requests.post("https://lambda-treasure-hunt.herokuapp.com/api/adv/sell/", json={
             "name": "treasure", "confirm": "yes"}, headers={'Authorization': f"Token {TOKEN}"}).json()
 
+        # get cooldown and sleep for the cooldown period
         cooldown = response["cooldown"]
         sleep(cooldown)
 
+        # confirm sale
         response = requests.post("https://lambda-treasure-hunt.herokuapp.com/api/adv/status/",
                                  headers={'Authorization': f"Token {TOKEN}"}).json()
 
+        # get cooldown and sleep for the cooldown period
         cooldown = response["cooldown"]
         sleep(cooldown)
 

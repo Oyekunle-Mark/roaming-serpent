@@ -7,6 +7,9 @@ verify_ssl = true
 
 [packages]
 requests = "*"
+python-decouple = "*"
+pylint = "*"
+autopep8 = "*"
 
 [requires]
 python_version = "3.7"

@@ -1,7 +1,11 @@
 import json
 from time import sleep
 import pip._vendor.requests as requests
+from decouple import config
 from util import Queue
+
+# GET TOKEN
+TOKEN = config("TOKEN")
 
 # will hold the traversal path
 traversalPath = []
@@ -126,7 +130,7 @@ while q.size() > 0:
 
     # move the player in that direction
     response = requests.post("https://lambda-treasure-hunt.herokuapp.com/api/adv/move/", json={
-                             "direction": next_direction}, headers={'Authorization': 'Token b84b4bca57fd4281c66e58d085e812be51cb389b'})
+                             "direction": next_direction}, headers={'Authorization': f"Token {TOKEN}"})
 
     # add it to the traversal path
     traversalPath.append(next_direction)

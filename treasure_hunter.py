@@ -186,22 +186,31 @@ def goto_treasure(current_room_id, destination_room_id_or_title, can_fly=False, 
         sleep(cooldown)
         current_room_id = str(data['room_id'])
 
+        # get the items in the current room
         items = data["items"]
+        # determines if current room has treasure or not
         has_treasure = False
 
+        # loop through every item in the room
         for item in items:
+            # if it is a treasure
             if item == "tiny treasure":
+                # set has_treasure to true
                 has_treasure = True
 
+        # if a treasure has been found
         if has_treasure:
+            # take the treasure
             response = requests.post("https://lambda-treasure-hunt.herokuapp.com/api/adv/take/", json={
                 "name": "treasure"}, headers={'Authorization': f"Token {TOKEN}"}).json()
 
+            # get cooldown and sleep for the cooldown period
             cooldown = response["cooldown"]
             sleep(cooldown)
 
             print("Picked up a treasure")
 
+            # return True to signify that a treasure has been found
             return True
 
 

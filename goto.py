@@ -2,6 +2,7 @@ import json
 import requests
 from decouple import config
 from time import sleep
+import argparse
 from util import Queue
 
 
@@ -110,3 +111,17 @@ def goto(current_room_id, destination_room_id_or_title, can_fly=False, can_dash=
         print(data)
         sleep(cooldown)
         current_room_id = str(data['room_id'])
+
+
+if __name__ == "__main__":
+    # instantiate the argument parser
+    # parser = argparse.ArgumentParser()
+
+    # add the filename argument to the parser
+    # parser.add_argument("filename", help="The name of the file to be executed")
+
+    # parse to get the argument
+    # args = parser.parse_args()
+
+    # call goto with the arg
+    pass

@@ -32,14 +32,20 @@ def examine():
 
 
 if __name__ == "__main__":
+    # get the current room
     current_room = get_current_room()
+    # wishing well room
     wishing_well_room = "55"
 
+    # go to the room if not there already
     goto(str(current_room), wishing_well_room)
 
+    # examine the well
     response = examine()
 
+    # write the well prophecy to a file
     with open("wishing_well_prophecy.txt", "w") as f:
         f.write(response["description"])
 
+    # print response
     print(response)

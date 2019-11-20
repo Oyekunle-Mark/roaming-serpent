@@ -113,6 +113,21 @@ def goto(current_room_id, destination_room_id_or_title, can_fly=False, can_dash=
         current_room_id = str(data['room_id'])
 
 
+def get_current_room():
+    # make request to the init endpoint
+    response = requests.get("https://lambda-treasure-hunt.herokuapp.com/api/adv/init/",
+                            headers={'Authorization': f"Token {TOKEN}"}).json()
+
+    # get room id
+    room_id = response["room_id"]
+    # get cooldown and sleep for the cooldown period
+    cooldown = response["cooldown"]
+    sleep(cooldown)
+
+    # return the room_id in string format
+    return str(room_id)
+
+
 if __name__ == "__main__":
     # instantiate the argument parser
     # parser = argparse.ArgumentParser()

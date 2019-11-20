@@ -102,7 +102,7 @@ def goto_treasure(current_room_id, destination_room_id_or_title, can_fly=False, 
             cooldown = response["cooldown"]
             sleep(cooldown)
 
-            print("Picked up a treasure")
+            print("\n******  Picked up a treasure  ******\n")
 
             # return True to signify that a treasure has been found
             return True
@@ -167,5 +167,5 @@ if __name__ == "__main__":
         cooldown = response["cooldown"]
         sleep(cooldown)
 
-        print("Sold a coin")
+        print("\n******  Sold a coin  ******\n")
         print(response)

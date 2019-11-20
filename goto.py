@@ -114,6 +114,7 @@ def goto(current_room_id, destination_room_id_or_title, can_fly=False, can_dash=
 
 
 def get_current_room():
+    TOKEN = config("TOKEN")
     # make request to the init endpoint
     response = requests.get("https://lambda-treasure-hunt.herokuapp.com/api/adv/init/",
                             headers={'Authorization': f"Token {TOKEN}"}).json()
@@ -130,13 +131,19 @@ def get_current_room():
 
 if __name__ == "__main__":
     # instantiate the argument parser
-    # parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser()
 
     # add the filename argument to the parser
-    # parser.add_argument("filename", help="The name of the file to be executed")
+    parser.add_argument("destination", help="The room you want to go to")
 
     # parse to get the argument
-    # args = parser.parse_args()
+    args = parser.parse_args()
 
-    # call goto with the arg
-    pass
+    # get the player's current room
+    current_room = get_current_room()
+
+    # get the destination room
+    destination_room = args.destination
+
+    # call goto with the arg and current room
+    goto(current_room, destination_room)
